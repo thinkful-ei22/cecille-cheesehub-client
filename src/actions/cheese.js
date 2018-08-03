@@ -17,9 +17,11 @@ export const fetchCheesesError = error => ({
     error
 });
 
-export const fetchCheeses = () => dispatch => {
+export function fetchCheeses(){
+  return function(dispatch) {
     dispatch(fetchCheesesRequest());
-    fetch(BASE_URL + '/api/cheeses').then(res => {
+    return fetch(`${BASE_URL}/api/cheeses`)
+      .then(res => {
         if (!res.ok) {
             return Promise.reject(res.statusText);
         }
@@ -29,4 +31,5 @@ export const fetchCheeses = () => dispatch => {
     }).catch(err => {
         dispatch(fetchCheesesError(err));
     });
-};
+  };
+}
